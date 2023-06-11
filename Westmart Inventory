@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Items {
+	char name[1024][2048];
+	double price[2048];
+}item_detail;
+
+int main(void) {
+	int choice = NULL,reps,total_items=0,delete_line;
+	while (choice != 4) {
+		system("cls");
+		printf("\t\t\t\t\t=======Westmart Inventory=======\n\t\t\t\t\t\[1]Add Item\n\t\t\t\t\t[2]View Items\n\t\t\t\t\t[3]Delete Items\n\t\t\t\t\t[4]Exit Program\n");
+		printf("\t\t\t\t\t->");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1: 
+			system("cls");
+			printf("\t\t\t\t\t=====Add Items=====\n");
+			printf("\t\t\t\t\tEnter How Many Items:");
+			scanf("%d", &reps);
+			for (int i = 0; i < reps; i++) {
+				printf("\n\t\t\t\t\tEnter Item Name[%d]:",(i+1));
+				scanf(" %[^\n]s", &item_detail.name[total_items]);
+				printf("\t\t\t\t\tEnter Item Price:");
+				scanf("%lf", &item_detail.price[total_items]);
+				total_items++;
+			}
+			printf("\n\t\t\t\t\tItem(s) Added!\n");
+			system("pause");
+			break;
+		case 2: 
+			system("cls");
+			printf("\t\t\t\t\t=====View Item(s)=====\n");
+			if (total_items == 0) {
+				printf("\n\t\t\t\t\tNo Available item(s) at this time\n");
+				system("pause");
+				break;
+			}
+			printf("\t\t\t\t\tNo. |Name | Price | \n");
+			for (int i = 0; i < total_items; i++) {
+				printf("\t\t\t\t\t[%d] %s $%.2f\n", (i + 1), item_detail.name[i], item_detail.price[i]);
+			}
+			printf("\n");
+			system("pause");
+			break;
+		case 3: 
+			system("cls");
+			printf("\t\t\t\t\t=====Delete Item(s)=====\n");
+			if (total_items == 0) {
+				printf("\t\t\t\t\tNo Available item(s) at this time\n");
+				system("pause");
+				break;
+			}
+			for (int i = 0; i < total_items; i++) {
+				printf("\t\t\t\t\t[%d] %s $%.2f\n", (i + 1), item_detail.name[i], item_detail.price[i]);
+			}
+			printf("\n\t\t\t\t\tEnter Which Item to Delete:");
+			scanf("%d", &delete_line);
+			if (delete_line<1 || delete_line>total_items) {
+				printf("\n\t\t\t\t\tInvalid Input!\n");
+				system("pause");
+				break;
+			}
+			for (int i = delete_line - 1; i < total_items - 1; i++) {
+				strcpy(item_detail.name[i], item_detail.name[i + 1]);
+				item_detail.price[i] = item_detail.price[i + 1];
+			}
+			total_items--;
+			printf("\n\t\t\t\t\tItem Successfully Deleted!\n");
+			system("pause");
+			break;
+		}
+	}
+	return 0;
+}
